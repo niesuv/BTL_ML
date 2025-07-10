@@ -23,6 +23,8 @@ export default function ChatPage() {
   const groupId = getCookie("group");
   const groupName = getCookie("group_name");
   const headers = { Authorization: `Bearer ${token}` };
+  const [userLang, setUserLang] = useState("en"); // mặc định
+  console.log("11" + userLang);
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -31,7 +33,12 @@ export default function ChatPage() {
       return;
     }
 
-    fetch(`${backendUrl}/user/me`, { headers }).catch(handleLogout);
+    fetch(`${backendUrl}/user/me`, { headers })
+      .then((res) => res.json())
+      .then((user) => {
+        setUserLang(user.language || "en");
+      })
+      .catch(handleLogout);
 
     const fetchMessages = async () => {
       try {
@@ -156,6 +163,7 @@ export default function ChatPage() {
       <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4" ref={chatRef}>
         {messages.map((msg) => (
           <MessageBubble
+            userLang={userLang}
             key={msg.id}
             msg={msg}
             username={username}

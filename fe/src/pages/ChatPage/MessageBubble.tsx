@@ -9,13 +9,13 @@ export interface Message {
   text_en?: string;
   text_vn?: string;
 }
-
 interface Props {
   msg: Message;
   username: string;
   isUnread: boolean;
   onDelete: (id: number) => void;
   onEdit: (msg: Message) => void;
+  userLang: string;
 }
 
 export default function MessageBubble({
@@ -24,6 +24,7 @@ export default function MessageBubble({
   isUnread,
   onDelete,
   onEdit,
+  userLang,
 }: Props) {
   const isMe = msg.username === username || msg.sender_name === username;
   const displayName = msg.username || msg.sender_name || "Unknown";
@@ -32,8 +33,20 @@ export default function MessageBubble({
     hour: "2-digit",
     minute: "2-digit",
   });
+  let translation: string | undefined;
 
-  const translation = msg.text_vn || msg.text_en || msg.text_fr || undefined;
+  switch (userLang) {
+    case "fr":
+      translation = msg.text_fr;
+      break;
+    case "en":
+      translation = msg.text_en;
+      break;
+    case "vi":
+    case "vn":
+      translation = msg.text_vn;
+      break;
+  }
 
   return (
     <div
