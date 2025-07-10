@@ -220,7 +220,7 @@ async def translate_text_background(message: Message, from_lang: str, db: Sessio
 async def translate(message: str, from_lang: str, to_lang: str) -> str:
     logger.info("Start dịch")
     client = OpenAI(
-        base_url="https://f6243807b4c4.ngrok-free.app/v1",
+        base_url="https://fc437837ae18.ngrok-free.app/v1",
         api_key="test"
     )
 
