@@ -263,8 +263,9 @@ async def translate(message: str, from_lang: str, to_lang: str) -> str:
         functools.partial(
             client.chat.completions.create,
             model="vcmt794/MLBTL_merged",
-            messages=chat_messages
+            messages=chat_messages,
+            max_tokens=int(len(chat_messages[1]['content'].split()) + 30),
         )
     )
-    logger.info(response.choices[0].message.content)
-    return response.choices[0].message.content
+    logger.info(response.choices[0].message.content.replace('<|im_end|>', '').strip())
+    return response.choices[0].message.content.replace('<|im_end|>', '').strip()
