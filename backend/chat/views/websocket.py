@@ -220,7 +220,7 @@ async def translate_text_background(message: Message, from_lang: str, db: Sessio
 async def translate(message: str, from_lang: str, to_lang: str) -> str:
     logger.info("Start dịch")
     client = OpenAI(
-        base_url="https://f6243807b4c4.ngrok-free.app/v1",
+        base_url="https://a1e5f582a24a.ngrok-free.app/v1",
         api_key="test"
     )
 
@@ -267,5 +267,5 @@ async def translate(message: str, from_lang: str, to_lang: str) -> str:
             max_tokens=int(len(chat_messages[1]['content'].split())*4 + 30),
         )
     )
-    logger.info(response.choices[0].message.content.replace('<|im_end|>', '').strip())
-    return response.choices[0].message.content.replace('<|im_end|>', '').strip()
+    logger.info(response.choices[0].message.content.replace('<|im_end|>', '').replace('<|im_start|>', '').strip())
+    return response.choices[0].message.content.replace('<|im_end|>', '').replace('<|im_start|>', '').strip()
