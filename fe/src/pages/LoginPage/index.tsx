@@ -2,6 +2,7 @@ import { Button, Form, Input, message } from "antd";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getCookie, setCookie } from "../../utils/cookies";
+import { backendUrl } from "../../http/api";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ export default function LoginPage() {
     password: string;
   }) => {
     try {
-      const response = await fetch("http://127.0.0.1:8000/token", {
+      const response = await fetch(`${backendUrl}/token`, {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
